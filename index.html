@@ -1399,12 +1399,12 @@
   });
   /* Core skills: project inquiry modal */
   (function projectModal() {
-    // ---- Submission: FormSubmit (formsubmit.co) ---------------------------------------
-    // No server, password or API key is needed. FormSubmit emails each enquiry to OWNER_EMAIL
-    // and sends the visitor an automatic confirmation (_autoresponse).
-    // First submission only: FormSubmit emails OWNER_EMAIL an "Activate Form" link; click it once.
+    // ---- Submission: Web3Forms (web3forms.com) -----------------------------------------
+    // The access key only lets this form deliver messages to the inbox it was created for;
+    // Web3Forms designs it to be public in website code. Enquiries go to patelmarvin052004@gmail.com.
     var OWNER_EMAIL = 'patelmarvin052004@gmail.com';
-    var INQUIRY_ENDPOINT = 'https://formsubmit.co/ajax/' + OWNER_EMAIL;
+    var INQUIRY_ENDPOINT = 'https://api.web3forms.com/submit';
+    var WEB3FORMS_KEY = '3b6021aa-6d63-4216-93dd-d52dc774e940';
     var RATE = { max: 3, windowMs: 10 * 60 * 1000, key: 'mp-inquiry-times' };   // gentle per-browser limit
     var MIN_FILL_MS = 3000;
 
@@ -1561,7 +1561,7 @@
     // ---- Error box ---------------------------------------------------------------------
     var alertBox = document.getElementById('pm-alert');
     var ALERTS = {
-      offline: ['Preview mode: sending works on the live website', 'This claude.ai preview can&#8217;t send emails, so nothing was sent. On your live website this button delivers the enquiry and the auto-reply instantly. To reach me now, use the email button.'],
+      offline: ['Preview mode: sending works on the live website', 'This claude.ai preview can&#8217;t send emails, so nothing was sent. On your live website this button delivers the enquiry instantly. To reach me now, use the email button.'],
       busy: ['Please wait a moment.', ''],
       failed: ['Something went wrong.', 'Your enquiry could not be sent right now. Please try again or contact me directly.']
     };
@@ -1655,49 +1655,35 @@
       if (form.hp_field && form.hp_field.value) { clearTimeout(timer); return; }      // honeypot: bots only
 
       var first = v.name.split(' ')[0];
-      var shortDetails = v.details.length > 280 ? v.details.slice(0, 277) + '…' : v.details;
       var when = new Date().toLocaleString('en-IN', { dateStyle: 'medium', timeStyle: 'short' });
-      var autoReply =
-        'Hi ' + v.name + ',\n\nThank you for reaching out through my portfolio.\n\n' +
-        'I’ve received your enquiry and the details you shared.\n\n' +
-        'I’ll review your requirements and get back to you regarding the next steps.\n\n' +
-        'Your enquiry:\n\nServices:\n' + v.services.join(', ') + '\n\nProject:\n' + shortDetails + '\n\n' +
-        'Best regards,\nMarvin Patel\n\nGoogle Ads Specialist\nPerformance Marketing';
       fetch(INQUIRY_ENDPOINT, {
         method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }, signal: ctl.signal,
         body: JSON.stringify({
+          access_key: WEB3FORMS_KEY,
+          subject: 'New Portfolio Enquiry — ' + v.name,
+          from_name: 'Marvin Patel Portfolio',
+          replyto: v.email,
+          botcheck: false,
           'Name': v.name,
           'email': v.email,
           'Phone': v.phone,
           'Services Interested In': v.services.join(', '),
           'Project Details': v.details,
           'Submission Date': when,
-          'Source': 'Marvin Patel Portfolio',
-          _subject: 'New Portfolio Enquiry — ' + v.name,
-          _replyto: v.email,
-          _template: 'table',
-          _captcha: 'false',
-          _honey: '',
-          _autoresponse: autoReply
+          'Source': 'Marvin Patel Portfolio'
         })
       })
         .then(function (r) { return r.json().catch(function () { return {}; }).then(function (d) { return { status: r.status, d: d || {} }; }); })
         .then(function (res) {
           clearTimeout(timer);
-          var d = res.d, msg = String(d.message || '');
-          if (res.status >= 200 && res.status < 300 && (d.success === true || d.success === 'true')) {
+          var d = res.d;
+          if (res.status >= 200 && res.status < 300 && d.success === true) {
             try { times.push(Date.now()); localStorage.setItem(RATE.key, JSON.stringify(times)); } catch (err) {}
             setBtn('sent'); setTimeout(function () { playSuccess(successHtml(first)); }, motion ? 420 : 0);
             return;
           }
           busy = false; send.disabled = false;
-          if (/activat/i.test(msg)) {   // one-time setup: owner hasn't clicked FormSubmit's activation link yet
-            setBtn('idle');
-            showAlert('offline', 'This form is waiting for one-time activation, so this enquiry was not delivered. ' +
-              'Check ' + OWNER_EMAIL + ' for an email from FormSubmit and click “Activate Form”, then send again.');
-            alertBox.querySelector('b').textContent = 'Almost ready: activate the form';
-            return;
-          }
+          if (res.status === 429) { setBtn('retry'); showAlert('busy', 'Too many enquiries were sent in a short time. Please try again in a few minutes.'); return; }
           setBtn('retry'); showAlert('failed');
         })
         .catch(function () {
