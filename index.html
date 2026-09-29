@@ -513,26 +513,46 @@
   .pm-err { min-height: 0; font: 600 12px/1.3 var(--f-body); color: #BE123C; }
   .pm-err:empty { display: none; }
 
-  .pm-svc { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-  .pm-svc label { position: relative; display: grid; grid-template-columns: 40px 1fr 22px; gap: 12px; align-items: center; padding: 12px 14px; border-radius: 15px; background: #fff;
-    border: 1.5px solid #ECE3DB; cursor: pointer; transition: transform .25s var(--ease), border-color .25s, box-shadow .25s, background-color .25s; }
-  .pm-svc label:hover { transform: translateY(-2px); border-color: #FBC9A3; box-shadow: 0 10px 20px -14px rgba(240,90,0,.55); }
-  .pm-svc input { position: absolute; opacity: 0; width: 1px; height: 1px; }
-  .pm-svc .ic { width: 40px; height: 40px; border-radius: 11px; display: grid; place-items: center; background: color-mix(in srgb, var(--sc) 11%, #fff); color: var(--sc); transition: transform .3s var(--ease); }
-  .pm-svc .ic svg { width: 21px; height: 21px; }
-  .pm-svc label:hover .ic { transform: scale(1.08); }
-  .pm-svc b { display: block; font: 700 14px/1.25 var(--f-body); }
-  .pm-svc small { display: block; font-size: 11.5px; color: var(--muted); line-height: 1.3; margin-top: 2px; }
-  .pm-svc .bx { width: 22px; height: 22px; border-radius: 7px; border: 1.5px solid #D9CEC5; display: grid; place-items: center; transition: all .25s; }
-  .pm-svc .bx svg { width: 14px; height: 14px; color: #fff; opacity: 0; transform: scale(.5); transition: all .25s var(--ease); }
-  .pm-svc input:checked + .ic { transform: scale(1.04); }
-  .pm-svc label:has(input:checked) { border-color: #F97316; background: #FFF8F2; box-shadow: 0 0 0 3px rgba(249,115,22,.14), 0 12px 24px -16px rgba(240,90,0,.7); }
-  .pm-svc label:has(input:checked) .bx { background: #F05A00; border-color: #F05A00; }
+  .pm-lg { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+  .pm-svc-hint { font: 500 12.5px/1 var(--f-body); color: #9A8D84; }
+  .pm-svc-count { margin-left: auto; font: 700 12px/1 var(--f-body); color: var(--accent); background: #FFF0E4; padding: 5px 9px; border-radius: 999px; }
+  .pm-svc-count:empty { display: none; }
+  .pm-svc { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 10px; margin-bottom: 6px; }
+  #pm-form fieldset:has(.pm-svc) { flex-shrink: 0; min-height: min-content; }
+  .pm-svc [data-svc=ga]{--sc:#F05A00} .pm-svc [data-svc=rmk]{--sc:#2563EB} .pm-svc [data-svc=audit]{--sc:#16A34A} .pm-svc [data-svc=track]{--sc:#7C3AED} .pm-svc [data-svc=rep]{--sc:#0891B2} .pm-svc [data-svc=lp]{--sc:#D9468F}
+  .pm-svc label.w3 { grid-column: span 2; } .pm-svc label.w2 { grid-column: span 3; }
+  .pm-svc label { position: relative; display: grid; grid-template-columns: auto 1fr; grid-template-rows: auto auto; column-gap: 12px; row-gap: 10px; align-content: start;
+    padding: 14px; min-height: 112px; border-radius: 16px; cursor: pointer; background: linear-gradient(180deg, #fff, #FFFCFA);
+    border: 1.5px solid #EFE5DD; box-shadow: 0 1px 2px rgba(10,10,10,.03);
+    transition: transform .25s var(--ease), border-color .25s, box-shadow .25s, background-color .25s; }
+  .pm-svc label.w2 { min-height: 0; grid-template-columns: auto 1fr auto; grid-template-rows: auto; align-items: center; }
+  .pm-svc label:hover { transform: translateY(-2px); border-color: color-mix(in srgb, var(--sc) 45%, #EFE5DD); box-shadow: 0 12px 24px -16px color-mix(in srgb, var(--sc) 70%, transparent); }
+  .pm-svc input { position: absolute; opacity: 0; width: 1px; height: 1px; pointer-events: none; }
+  .pm-svc .ic { width: 42px; height: 42px; border-radius: 12px; display: grid; place-items: center; background: color-mix(in srgb, var(--sc) 11%, #fff); color: var(--sc);
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--sc) 16%, transparent); transition: background-color .25s, color .25s, transform .3s var(--ease); }
+  .pm-svc .ic svg { width: 23px; height: 23px; }
+  .pm-svc label:hover .ic { transform: scale(1.06); }
+  .pm-svc .tx { grid-column: 1 / -1; min-width: 0; }
+  .pm-svc label.w2 .tx { grid-column: auto; }
+  .pm-svc b { display: block; font: 750 14px/1.25 var(--f-body); color: var(--ink); }
+  .pm-svc small { display: block; font-size: 12px; color: var(--muted); line-height: 1.35; margin-top: 3px; }
+  .pm-svc .bx { position: absolute; top: 14px; right: 14px; width: 22px; height: 22px; border-radius: 50%; border: 1.5px solid #D9CEC5; background: #fff; display: grid; place-items: center; transition: all .25s var(--ease); }
+  .pm-svc label.w2 .bx { position: static; }
+  .pm-svc .bx svg { width: 13px; height: 13px; color: #fff; opacity: 0; transform: scale(.4); transition: all .25s var(--ease); }
+  .pm-svc label:has(input:checked) { border-color: var(--sc); background: color-mix(in srgb, var(--sc) 5%, #fff);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--sc) 14%, transparent), 0 14px 26px -18px color-mix(in srgb, var(--sc) 80%, transparent); }
+  .pm-svc label:has(input:checked) .ic { background: var(--sc); color: #fff; }
+  .pm-svc label:has(input:checked) .bx { background: var(--sc); border-color: var(--sc); }
   .pm-svc label:has(input:checked) .bx svg { opacity: 1; transform: none; }
   .pm-svc label:has(input:focus-visible) { outline: 2px solid var(--accent); outline-offset: 2px; }
-  .pm-svc .sug { position: absolute; top: -9px; right: 12px; font: 700 10px/1 var(--f-body); letter-spacing: .04em; padding: 4px 7px; border-radius: 999px; background: #F05A00; color: #fff; }
+  .pm-svc .sug { position: absolute; top: -9px; left: 14px; font: 700 10px/1 var(--f-body); letter-spacing: .04em; padding: 4px 8px; border-radius: 999px; background: var(--sc); color: #fff; }
   .pm-svc .sug[hidden] { display: none; }
-
+  @media (max-width: 560px) {
+    .pm-svc { grid-template-columns: 1fr 1fr; }
+    .pm-svc label.w3, .pm-svc label.w2 { grid-column: span 1; min-height: 0; grid-template-columns: auto 1fr; }
+    .pm-svc label.w2 .tx { grid-column: 1 / -1; }
+    .pm-svc label.w2 .bx { position: absolute; }
+  }
   .pm textarea { min-height: 120px; resize: vertical; padding: 14px 14px 26px 44px; }
   .pm-ta { position: relative; }
   .pm-ta > svg { position: absolute; left: 14px; top: 15px; width: 18px; height: 18px; color: #9A8D84; }
@@ -581,7 +601,7 @@
     .pm-close { position: fixed; top: 12px; right: 12px; }
   }
   @media (max-width: 560px) {
-    .pm-grid, .pm-svc { grid-template-columns: 1fr; }
+    .pm-grid { grid-template-columns: 1fr; }
     .pm-foot { flex-direction: column-reverse; align-items: stretch; }
     .pm-send { justify-content: center; }
     .pm-soc { justify-content: center; }
@@ -658,13 +678,99 @@
   @keyframes spin { to { transform: rotate(360deg); } }
 
   /* Education */
-  .edu { display: grid; grid-template-columns: auto 1fr auto; gap: clamp(18px, 3vw, 36px); align-items: center; padding: clamp(22px, 3vw, 32px);
-    border: 1px solid var(--line); border-radius: 18px; background: var(--surface); }
-  @media (max-width: 720px) { .edu { grid-template-columns: 1fr; } }
-  .edu .logo { width: 64px; height: 64px; border-radius: 16px; background: color-mix(in srgb, var(--accent) 10%, transparent); color: var(--accent); display: grid; place-items: center; }
-  .edu .logo svg { width: 30px; height: 30px; }
-  .edu p { margin: 4px 0 0; color: var(--muted); }
-  .edu .yr { font: 500 14px/1 var(--f-mono); padding: 10px 14px; border-radius: 10px; background: var(--bg2); white-space: nowrap; }
+  #education.ed { position: relative; overflow: hidden; background: linear-gradient(180deg, #FFFFFF 0%, #FFFBF7 100%); }
+  .ed::before, .ed::after { content: ""; position: absolute; pointer-events: none; border-radius: 50%; filter: blur(10px); }
+  .ed::before { width: 620px; height: 620px; right: -180px; top: -160px; background: radial-gradient(circle, rgba(255,154,77,.20), transparent 65%); }
+  .ed::after { width: 460px; height: 460px; left: -200px; bottom: -120px; background: radial-gradient(circle, rgba(96,165,250,.08), transparent 65%); }
+  .ed .wrap { position: relative; z-index: 1; }
+  .ed-top { display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr); gap: clamp(20px, 3vw, 44px); align-items: center; }
+  .ed-head { margin-bottom: clamp(26px, 3.4vw, 40px); }
+  .ed-eb svg { width: 14px; height: 14px; margin-left: -2px; }
+  .ed-h { font: 800 clamp(34px, 5vw, 62px)/1.02 var(--f-body); letter-spacing: -.04em; margin: 16px 0 0; }
+  .ed-h > span { display: block; }
+  .ed-sub { margin: 16px 0 0; max-width: 26em; color: var(--muted); font-size: clamp(16px, 1.5vw, 19px); line-height: 1.5; }
+
+  /* Main card */
+  .ed-card { position: relative; display: grid; grid-template-columns: auto auto minmax(0, 1fr); gap: clamp(16px, 2.2vw, 28px); align-items: start;
+    padding: clamp(22px, 3vw, 36px) clamp(20px, 3vw, 38px); border-radius: 28px; background: #fff; border: 1px solid #F3E8DF;
+    box-shadow: 0 1px 2px rgba(10,10,10,.03), 0 24px 48px -30px rgba(240,90,0,.28);
+    transition: transform .45s var(--ease), box-shadow .45s var(--ease), border-color .45s; }
+  .ed-card:hover { transform: translateY(-4px); border-color: #FBD3B6; box-shadow: 0 1px 2px rgba(10,10,10,.03), 0 30px 60px -28px rgba(240,90,0,.42), 0 0 0 6px rgba(240,90,0,.05); }
+  .ed-rail { grid-row: 1 / span 2; display: grid; justify-items: center; grid-template-rows: auto 1fr auto; align-self: stretch; min-height: 150px; }
+  .ed-num { width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; font: 800 15px/1 var(--f-body); color: #fff;
+    background: radial-gradient(circle at 35% 30%, #FF9A4D, #F05A00 70%); box-shadow: 0 0 0 6px rgba(240,90,0,.12), 0 10px 18px -8px rgba(240,90,0,.7); }
+  .ed-line { width: 2px; margin: 8px 0; background: #F6E4D6; border-radius: 2px; position: relative; overflow: hidden; }
+  .ed-line i { position: absolute; inset: 0; background: linear-gradient(#F05A00, #FFB27A); transform-origin: top; }
+  .ed-dot { width: 10px; height: 10px; border-radius: 50%; background: #F05A00; box-shadow: 0 0 0 4px rgba(240,90,0,.14); }
+  .ed-ic { width: 76px; height: 76px; border-radius: 22px; display: grid; place-items: center; color: var(--accent);
+    background: linear-gradient(145deg, #FFF4EA, #FFE6D1); box-shadow: inset 0 1px 0 #fff, 0 12px 22px -14px rgba(240,90,0,.55); }
+  .ed-ic svg { width: 54px; height: 54px; transition: transform .5s var(--ease); }
+  .ed-card:hover .ed-ic svg { transform: translateY(-3px) rotate(-8deg); }
+  .ed-body { min-width: 0; padding-top: 4px; }
+  .ed-body h3 { font: 800 clamp(20px, 2.1vw, 26px)/1.2 var(--f-body); letter-spacing: -.02em; }
+  .ed-uni { margin: 8px 0 0; font: 500 16.5px/1.4 var(--f-body); color: #333; }
+  .ed-spec { display: inline-flex; align-items: center; gap: 10px; margin-top: 18px; padding: 10px 16px; border-radius: 14px;
+    background: #FFF1E6; border: 1px solid #FDDCC3; color: #1f1f1f; font: 600 14px/1.3 var(--f-body); }
+  .ed-spec svg { width: 18px; height: 18px; color: var(--accent); flex: none; }
+  .ed-meta { grid-column: 3; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; padding-top: 18px; border-top: 1px dashed #F1E1D4; }
+  .ed-meta .k { font: 700 11.5px/1 var(--f-body); letter-spacing: .1em; text-transform: uppercase; color: #9A8D84; }
+  .ed-meta .yr { display: flex; align-items: center; gap: 10px; font: 800 19px/1 var(--f-body); color: var(--ink); white-space: nowrap; }
+  .ed-meta .yr svg { width: 22px; height: 22px; color: var(--accent); flex: none; }
+  .ed-meta .yr em { font-style: normal; color: #C9B8AA; font-weight: 600; }
+
+  /* Illustration */
+  .ed-art { position: relative; align-self: stretch; display: grid; place-items: center; }
+  .ed-art svg { width: 112%; max-width: 540px; margin-right: -6%; height: auto; overflow: visible; }
+  .ed-art .fl { transform-box: fill-box; transform-origin: center; }
+  @media (prefers-reduced-motion: no-preference) {
+    .ed:not(.gs) .ed-art .f1 { animation: edFloat 6s ease-in-out infinite; }
+    .ed:not(.gs) .ed-art .f2 { animation: edFloat 7s ease-in-out -2s infinite; }
+    .ed:not(.gs) .ed-art .f3 { animation: edFloat 5.5s ease-in-out -1s infinite; }
+  }
+  @keyframes edFloat { 50% { transform: translateY(-8px); } }
+
+  /* Foundation flow */
+  .ed-flow { position: relative; margin-top: clamp(30px, 4vw, 48px); padding: clamp(22px, 3vw, 34px); border-radius: 28px;
+    background: linear-gradient(180deg, rgba(255,247,240,.9), rgba(255,255,255,.7)); border: 1px solid #F6ECE4; }
+  .ed-wire { position: absolute; left: 0; top: 0; width: 100%; height: 100%; pointer-events: none; overflow: visible; }
+  .ed-wire path { fill: none; stroke: url(#edg-wire); stroke-width: 2; stroke-linecap: round; }
+  .ed-wire circle { fill: url(#edg-ball); }
+  .ed-steps { position: relative; list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(20px, 3.2vw, 44px); }
+  .ed-step { position: relative; text-align: center; padding: 22px 16px 22px; border-radius: 20px; background: #fff; border: 1px solid #F4EBE4;
+    box-shadow: 0 1px 2px rgba(10,10,10,.03), 0 16px 30px -24px rgba(240,90,0,.35);
+    transition: transform .4s var(--ease), border-color .4s, box-shadow .4s; }
+  .ed-step:hover { transform: translateY(-5px); border-color: var(--ec, #F05A00); box-shadow: 0 1px 2px rgba(10,10,10,.03), 0 22px 36px -22px color-mix(in srgb, var(--ec, #F05A00) 60%, transparent); }
+  .ed-step::before { content: ""; position: absolute; left: 22%; right: 22%; top: -1px; height: 3px; border-radius: 0 0 3px 3px; background: var(--ec, #F05A00); opacity: 0; transition: opacity .4s; }
+  .ed-step:hover::before { opacity: 1; }
+  .ed-step .si { width: 64px; height: 64px; margin: -52px auto 10px; display: grid; place-items: center; }
+  .ed-step .si svg { width: 64px; height: 64px; overflow: visible; transition: transform .4s var(--ease); filter: drop-shadow(0 10px 12px rgba(240,90,0,.22)); }
+  .ed-step:hover .si svg { transform: scale(1.06); }
+  .ed-step h4 { margin: 0; font: 800 16px/1.3 var(--f-body); letter-spacing: -.01em; color: var(--ink); }
+  .ed-step p { margin: 6px 0 0; font-size: 14px; line-height: 1.45; color: var(--muted); }
+  .ed-flow { padding-top: clamp(52px, 5vw, 60px); }
+
+  @media (max-width: 1020px) {
+    .ed-top { grid-template-columns: minmax(0, 1fr) minmax(0, .8fr); }
+  }
+  @media (max-width: 860px) {
+    .ed-top { grid-template-columns: 1fr; }
+    .ed-art svg { width: 100%; max-width: 420px; margin: 0 auto; }
+    .ed-steps { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 58px; }
+    .ed-wire { display: none; }
+  }
+  @media (max-width: 560px) {
+    .ed-card { grid-template-columns: auto minmax(0, 1fr); column-gap: 14px; border-radius: 22px; }
+    .ed-rail { grid-row: 1 / span 3; min-height: 0; }
+    .ed-ic { width: 60px; height: 60px; border-radius: 18px; }
+    .ed-ic svg { width: 30px; height: 30px; }
+    .ed-body, .ed-meta { grid-column: 2; }
+    .ed-ic { grid-column: 2; }
+    .ed-spec { font-size: 13px; padding: 9px 13px; }
+    .ed-steps { grid-template-columns: 1fr; row-gap: 56px; }
+    .ed-step:not(:last-child)::after { content: ""; position: absolute; left: 50%; bottom: -48px; width: 2px; height: 36px; margin-left: -1px;
+      background: linear-gradient(#FFB27A, rgba(255,178,122,0)); }
+    .ed-flow { padding: 54px 16px 20px; }
+  }
 
   /* Contact */
   .contact { border-radius: 24px; padding: clamp(28px, 5vw, 64px); background: linear-gradient(135deg, #FFF3E8, #FFE2C7); color: var(--ink); border: 1px solid #FED7AA; display: grid; grid-template-columns: 1fr 1fr; gap: clamp(24px, 4vw, 48px); align-items: center; position: relative; overflow: hidden; }
@@ -930,7 +1036,7 @@
         <button class="pm-close" type="button" data-close aria-label="Close"><svg aria-hidden="true"><use href="#pm-x"/></svg></button>
         <div class="pm-art" aria-hidden="true">
           <p class="pm-script"><span>Let&#8217;s Build</span><span>Something Great</span><span>Together</span></p>
-          <svg class="pm-svg" viewBox="0 0 400 660" preserveAspectRatio="xMidYMax meet" aria-hidden="true"><defs><symbol id="pm-thumb" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10v11H3.5V10z"/><path d="M7 10.5 11 3a2.3 2.3 0 0 1 2.6 2.9L12.7 9H19a2 2 0 0 1 2 2.3l-1.3 7.6A2.5 2.5 0 0 1 17.2 21H7"/></symbol><symbol id="pm-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="m3.5 6.5 8.5 6.5 8.5-6.5"/></symbol><symbol id="pm-call" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3.5h3.2l1.6 4-2 1.3a11 11 0 0 0 7.4 7.4l1.3-2 4 1.6V19a2 2 0 0 1-2.2 2A17 17 0 0 1 3 5.7 2 2 0 0 1 5 3.5z"/></symbol><symbol id="pm-msg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4z"/><path d="M8 9.5h8M8 12.5h5"/></symbol><symbol id="pm-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6 6 18"/></symbol><symbol id="pm-plane" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 3 10 14"/><path d="m21 3-7 18-4-7-7-4z"/></symbol><symbol id="pm-chk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></symbol><symbol id="pm-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="10.5" width="14" height="10" rx="2.5"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/></symbol><symbol id="pm-retry" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11a8 8 0 1 0-2.3 5.7"/><path d="M20 4v7h-7"/></symbol><symbol id="pm-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3"/></symbol><filter id="pm-sh" x="-30%" y="-30%" width="160%" height="170%"><feDropShadow dx="0" dy="8" stdDeviation="8" flood-color="#B4501A" flood-opacity=".18"/></filter><linearGradient id="pm-bar" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#FDBA74"/><stop offset="1" stop-color="#F05A00"/></linearGradient><linearGradient id="pm-up" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#FF9A4D"/><stop offset="1" stop-color="#E24E00"/></linearGradient></defs><path class="pm-link" d="M110 262 Q169.5 282.0 205 330"/><path class="pm-link" d="M292 222 Q260.5 262.0 205 330"/><path class="pm-link" d="M205 330 Q267.5 337.0 306 372"/><path class="pm-link" d="M205 330 Q165.5 361.0 102 420"/><path class="pm-link" d="M306 372 Q296.0 426.0 262 508"/><path class="pm-link" d="M102 420 Q194.0 450.0 262 508"/><path class="pm-link" d="M262 508 Q318.0 538.0 350 596"/><path class="pm-link" d="M110 262 Q213.0 228.0 292 222"/><circle class="pm-pt" cx="60" cy="190" r="4" fill="#F97316" style="animation-delay:-0.0s"/><circle class="pm-pt" cx="372" cy="150" r="5" fill="#F97316" style="animation-delay:-0.5s"/><circle class="pm-pt" cx="230" cy="160" r="3" fill="#F97316" style="animation-delay:-1.0s"/><circle class="pm-pt" cx="380" cy="460" r="4" fill="#F97316" style="animation-delay:-1.5s"/><circle class="pm-pt" cx="40" cy="520" r="3.5" fill="#F97316" style="animation-delay:-2.0s"/><circle class="pm-pt" cx="180" cy="460" r="3" fill="#F97316" style="animation-delay:-2.5s"/><circle class="pm-pt" cx="360" cy="270" r="3" fill="#F97316" style="animation-delay:-3.0s"/><circle class="pm-pt" cx="30" cy="330" r="4" fill="#F97316" style="animation-delay:-3.5s"/><circle class="pm-pt" cx="220" cy="610" r="3" fill="#F97316" style="animation-delay:-4.0s"/><circle class="pm-pt" cx="170" cy="230" r="2.5" fill="#F97316" style="animation-delay:-4.5s"/><g class="pm-t"><ellipse cx="130" cy="612" rx="118" ry="26" fill="#FFB27A" opacity=".45"/><path d="M28 596v12a102 22 0 0 0 204 0v-12" fill="#FDBA74"/><ellipse cx="130" cy="596" rx="102" ry="22" fill="#FFE3CC"/><rect x="74" y="556" width="18" height="40" rx="3" fill="url(#pm-bar)"/><rect x="98" y="540" width="18" height="56" rx="3" fill="url(#pm-bar)"/><rect x="122" y="522" width="18" height="74" rx="3" fill="url(#pm-bar)"/><path d="M156 596v-66h-14l26-34 26 34h-14v66z" fill="url(#pm-up)"/></g><g class="pm-t"><g class="pm-fl" style="animation-delay:-0s"><g transform="rotate(-8 110 262)"><rect x="60.0" y="212.0" width="100" height="100" rx="22" fill="#fff" stroke="#FBE1CC" filter="url(#pm-sh)"/><use href="#i-ad" x="92.0" y="228.0" width="36.0" height="36.0" style="color:#F05A00"/><text class="pm-lbl" x="110" y="288">Google Ads</text></g></g></g><g class="pm-t"><g class="pm-fl" style="animation-delay:-1.2s"><g transform="rotate(7 292 222)"><rect x="244.0" y="174.0" width="96" height="96" rx="21" fill="#fff" stroke="#FBE1CC" filter="url(#pm-sh)"/><use href="#pm-thumb" x="274.7" y="189.4" width="34.6" height="34.6" style="color:#2563EB"/><text class="pm-lbl" x="292" y="247">Meta Ads</text></g></g></g><g class="pm-t"><g class="pm-fl" style="animation-delay:-2.1s"><g transform="rotate(6 306 372)"><rect x="254.0" y="320.0" width="104" height="104" rx="23" fill="#fff" stroke="#FBE1CC" filter="url(#pm-sh)"/><use href="#i-bars" x="287.3" y="336.6" width="37.4" height="37.4" style="color:#F05A00"/><text class="pm-lbl" x="306" y="399">Performance</text><text class="pm-lbl" x="306" y="412">Marketing</text></g></g></g><g class="pm-t"><g class="pm-fl" style="animation-delay:-0.6s"><g transform="rotate(-7 102 420)"><rect x="53.0" y="371.0" width="98" height="98" rx="22" fill="#fff" stroke="#FBE1CC" filter="url(#pm-sh)"/><use href="#cs-code" x="84.4" y="386.7" width="35.3" height="35.3" style="color:#F05A00"/><text class="pm-lbl" x="102" y="445">Website</text><text class="pm-lbl" x="102" y="458">Build</text></g></g></g><g class="pm-t"><g class="pm-fl" style="animation-delay:-1.7s"><g transform="rotate(6 262 508)"><rect x="213.0" y="459.0" width="98" height="98" rx="22" fill="#fff" stroke="#FBE1CC" filter="url(#pm-sh)"/><use href="#i-phone" x="244.4" y="474.7" width="35.3" height="35.3" style="color:#F05A00"/><text class="pm-lbl" x="262" y="533">Applications</text><text class="pm-lbl" x="262" y="546">Create</text></g></g></g><g class="pm-t"><g class="pm-fl" style="animation-delay:-2.6s"><g transform="rotate(0 205 330)"><rect x="176.0" y="301.0" width="58" height="58" rx="13" fill="#fff" stroke="#FBE1CC" filter="url(#pm-sh)"/><use href="#cs-report" x="194.6" y="319.6" width="20.9" height="20.9" style="color:#2563EB"/></g></g></g><g class="pm-t"><g class="pm-fl" style="animation-delay:-0.9s"><g transform="rotate(0 350 596)"><rect x="323.0" y="569.0" width="54" height="54" rx="12" fill="#fff" stroke="#FBE1CC" filter="url(#pm-sh)"/><use href="#i-trend" x="340.3" y="586.3" width="19.4" height="19.4" style="color:#16A34A"/></g></g></g></svg>
+          <svg class="pm-svg" viewBox="0 0 400 660" preserveAspectRatio="xMidYMax meet" aria-hidden="true"><defs><symbol id="pm-thumb" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10v11H3.5V10z"/><path d="M7 10.5 11 3a2.3 2.3 0 0 1 2.6 2.9L12.7 9H19a2 2 0 0 1 2 2.3l-1.3 7.6A2.5 2.5 0 0 1 17.2 21H7"/></symbol><symbol id="svc-ga" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="3" width="19" height="7" rx="3.5"/><circle cx="6.6" cy="6.5" r="1.6"/><path d="m7.8 7.7 1.1 1.1M11.5 6.5h6.5"/><rect x="2.5" y="13.5" width="6" height="4" rx="1.2" fill="currentColor" stroke="none"/><path d="M11 15.5h10.5M2.5 21h12"/></symbol><symbol id="svc-meta" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="2.5" width="18" height="19" rx="3"/><circle cx="7.3" cy="6.6" r="1.5"/><path d="M10.4 6.6h6.6"/><rect x="6" y="10" width="12" height="5.8" rx="1.4"/><path d="M8.6 19.6s-1.9-1.1-1.9-2.3a1 1 0 0 1 1.9-.5 1 1 0 0 1 1.9.5c0 1.2-1.9 2.3-1.9 2.3zM13 18.3h4.5"/></symbol><symbol id="svc-pm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="13" r="8"/><circle cx="11" cy="13" r="4"/><circle cx="11" cy="13" r=".6" fill="currentColor"/><path d="M11 13 20 4M16.5 3.8 20 4l.2 3.5"/></symbol><symbol id="svc-web" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="3.5" width="19" height="17" rx="2.6"/><path d="M2.5 8.3h19"/><circle cx="5.5" cy="5.9" r=".5" fill="currentColor"/><circle cx="7.9" cy="5.9" r=".5" fill="currentColor"/><path d="m10 12.2-2.4 2.4 2.4 2.4M14 12.2l2.4 2.4-2.4 2.4"/></symbol><symbol id="svc-app" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="6.5" y="2" width="11" height="20" rx="2.6"/><rect x="9" y="5.6" width="2.4" height="2.4" rx=".6"/><rect x="12.6" y="5.6" width="2.4" height="2.4" rx=".6"/><rect x="9" y="9.4" width="2.4" height="2.4" rx=".6"/><rect x="12.6" y="9.4" width="2.4" height="2.4" rx=".6" fill="currentColor"/><path d="M11 18.6h2"/></symbol><symbol id="svc-rmk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11a8 8 0 0 0-14.3-4.9M4 4v4h4"/><path d="M4 13a8 8 0 0 0 14.3 4.9M20 20v-4h-4"/><circle cx="12" cy="10.5" r="2"/><path d="M8.8 15.5a3.6 3.6 0 0 1 6.4 0"/></symbol><symbol id="svc-audit" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20.5h8M5 17v-4M8.5 17V9"/><circle cx="16" cy="11" r="4.5"/><path d="m19.3 14.3 2.7 2.7M14 11.5l1.3 1.2 2.2-2.6"/></symbol><symbol id="svc-track" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="1" fill="currentColor"/><path d="M12 1.5v3M12 19.5v3M1.5 12h3M19.5 12h3"/></symbol><symbol id="svc-rep" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M7 16v-3M11 16V9M15 16v-5"/><path d="m6.5 9.5 3-2.5 3.5 2 4.5-3.5"/></symbol><symbol id="svc-lp" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="3.5" width="19" height="17" rx="2.6"/><path d="M2.5 8h19"/><rect x="6" y="11" width="6" height="6" rx="1.2"/><path d="M14.5 12h3.5M14.5 15h2.5"/></symbol><symbol id="pm-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="m3.5 6.5 8.5 6.5 8.5-6.5"/></symbol><symbol id="pm-call" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3.5h3.2l1.6 4-2 1.3a11 11 0 0 0 7.4 7.4l1.3-2 4 1.6V19a2 2 0 0 1-2.2 2A17 17 0 0 1 3 5.7 2 2 0 0 1 5 3.5z"/></symbol><symbol id="pm-msg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4z"/><path d="M8 9.5h8M8 12.5h5"/></symbol><symbol id="pm-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6 6 18"/></symbol><symbol id="pm-plane" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 3 10 14"/><path d="m21 3-7 18-4-7-7-4z"/></symbol><symbol id="pm-chk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></symbol><symbol id="pm-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="10.5" width="14" height="10" rx="2.5"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/></symbol><symbol id="pm-retry" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11a8 8 0 1 0-2.3 5.7"/><path d="M20 4v7h-7"/></symbol><symbol id="pm-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3"/></symbol><filter id="pm-sh" x="-30%" y="-30%" width="160%" height="170%"><feDropShadow dx="0" dy="8" stdDeviation="8" flood-color="#B4501A" flood-opacity=".18"/></filter><linearGradient id="pm-bar" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#FDBA74"/><stop offset="1" stop-color="#F05A00"/></linearGradient><linearGradient id="pm-up" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#FF9A4D"/><stop offset="1" stop-color="#E24E00"/></linearGradient></defs><path class="pm-link" d="M110 262 Q169.5 282.0 205 330"/><path class="pm-link" d="M292 222 Q260.5 262.0 205 330"/><path class="pm-link" d="M205 330 Q267.5 337.0 306 372"/><path class="pm-link" d="M205 330 Q165.5 361.0 102 420"/><path class="pm-link" d="M306 372 Q296.0 426.0 262 508"/><path class="pm-link" d="M102 420 Q194.0 450.0 262 508"/><path class="pm-link" d="M262 508 Q318.0 538.0 350 596"/><path class="pm-link" d="M110 262 Q213.0 228.0 292 222"/><circle class="pm-pt" cx="60" cy="190" r="4" fill="#F97316" style="animation-delay:-0.0s"/><circle class="pm-pt" cx="372" cy="150" r="5" fill="#F97316" style="animation-delay:-0.5s"/><circle class="pm-pt" cx="230" cy="160" r="3" fill="#F97316" style="animation-delay:-1.0s"/><circle class="pm-pt" cx="380" cy="460" r="4" fill="#F97316" style="animation-delay:-1.5s"/><circle class="pm-pt" cx="40" cy="520" r="3.5" fill="#F97316" style="animation-delay:-2.0s"/><circle class="pm-pt" cx="180" cy="460" r="3" fill="#F97316" style="animation-delay:-2.5s"/><circle class="pm-pt" cx="360" cy="270" r="3" fill="#F97316" style="animation-delay:-3.0s"/><circle class="pm-pt" cx="30" cy="330" r="4" fill="#F97316" style="animation-delay:-3.5s"/><circle class="pm-pt" cx="220" cy="610" r="3" fill="#F97316" style="animation-delay:-4.0s"/><circle class="pm-pt" cx="170" cy="230" r="2.5" fill="#F97316" style="animation-delay:-4.5s"/><g class="pm-t"><ellipse cx="130" cy="612" rx="118" ry="26" fill="#FFB27A" opacity=".45"/><path d="M28 596v12a102 22 0 0 0 204 0v-12" fill="#FDBA74"/><ellipse cx="130" cy="596" rx="102" ry="22" fill="#FFE3CC"/><rect x="74" y="556" width="18" height="40" rx="3" fill="url(#pm-bar)"/><rect x="98" y="540" width="18" height="56" rx="3" fill="url(#pm-bar)"/><rect x="122" y="522" width="18" height="74" rx="3" fill="url(#pm-bar)"/><path d="M156 596v-66h-14l26-34 26 34h-14v66z" fill="url(#pm-up)"/></g><g class="pm-t"><g class="pm-fl" style="animation-delay:-0s"><g transform="rotate(-8 110 262)"><rect x="60.0" y="212.0" width="100" height="100" rx="22" fill="#fff" stroke="#FBE1CC" filter="url(#pm-sh)"/><use href="#i-ad" x="92.0" y="228.0" width="36.0" height="36.0" style="color:#F05A00"/><text class="pm-lbl" x="110" y="288">Google Ads</text></g></g></g><g class="pm-t"><g class="pm-fl" style="animation-delay:-1.2s"><g transform="rotate(7 292 222)"><rect x="244.0" y="174.0" width="96" height="96" rx="21" fill="#fff" stroke="#FBE1CC" filter="url(#pm-sh)"/><use href="#svc-rmk" x="274.7" y="189.4" width="34.6" height="34.6" style="color:#2563EB"/><text class="pm-lbl" x="292" y="247">Remarketing</text></g></g></g><g class="pm-t"><g class="pm-fl" style="animation-delay:-2.1s"><g transform="rotate(6 306 372)"><rect x="254.0" y="320.0" width="104" height="104" rx="23" fill="#fff" stroke="#FBE1CC" filter="url(#pm-sh)"/><use href="#svc-track" x="287.3" y="336.6" width="37.4" height="37.4" style="color:#F05A00"/><text class="pm-lbl" x="306" y="399">Conversion</text><text class="pm-lbl" x="306" y="412">Tracking</text></g></g></g><g class="pm-t"><g class="pm-fl" style="animation-delay:-0.6s"><g transform="rotate(-7 102 420)"><rect x="53.0" y="371.0" width="98" height="98" rx="22" fill="#fff" stroke="#FBE1CC" filter="url(#pm-sh)"/><use href="#cs-code" x="84.4" y="386.7" width="35.3" height="35.3" style="color:#F05A00"/><text class="pm-lbl" x="102" y="445">Landing</text><text class="pm-lbl" x="102" y="458">Pages</text></g></g></g><g class="pm-t"><g class="pm-fl" style="animation-delay:-1.7s"><g transform="rotate(6 262 508)"><rect x="213.0" y="459.0" width="98" height="98" rx="22" fill="#fff" stroke="#FBE1CC" filter="url(#pm-sh)"/><use href="#svc-rep" x="244.4" y="474.7" width="35.3" height="35.3" style="color:#F05A00"/><text class="pm-lbl" x="262" y="533">Analytics &amp;</text><text class="pm-lbl" x="262" y="546">Reporting</text></g></g></g><g class="pm-t"><g class="pm-fl" style="animation-delay:-2.6s"><g transform="rotate(0 205 330)"><rect x="176.0" y="301.0" width="58" height="58" rx="13" fill="#fff" stroke="#FBE1CC" filter="url(#pm-sh)"/><use href="#cs-report" x="194.6" y="319.6" width="20.9" height="20.9" style="color:#2563EB"/></g></g></g><g class="pm-t"><g class="pm-fl" style="animation-delay:-0.9s"><g transform="rotate(0 350 596)"><rect x="323.0" y="569.0" width="54" height="54" rx="12" fill="#fff" stroke="#FBE1CC" filter="url(#pm-sh)"/><use href="#i-trend" x="340.3" y="586.3" width="19.4" height="19.4" style="color:#16A34A"/></g></g></g></svg>
         </div>
         <div class="pm-main">
           <form id="pm-form" novalidate>
@@ -942,7 +1048,7 @@
               <div class="pm-f" data-rv data-f="name"><label for="pm-name">Full Name<sup>*</sup></label><div class="pm-in"><svg aria-hidden="true"><use href="#i-user"/></svg><input id="pm-name" name="name" autocomplete="name" placeholder="Enter your full name" required maxlength="80"></div><span class="pm-err" aria-live="polite"></span></div>
               <div class="pm-f" data-rv data-f="phone"><label for="pm-phone">Phone Number<sup>*</sup></label><div class="pm-in"><svg aria-hidden="true"><use href="#pm-call"/></svg><input id="pm-phone" name="phone" type="tel" autocomplete="tel" placeholder="+91 XXXXX XXXXX" required maxlength="20"></div><span class="pm-err" aria-live="polite"></span></div>
               <div class="pm-f full" data-rv data-f="email"><label for="pm-email">Email Address<sup>*</sup></label><div class="pm-in"><svg aria-hidden="true"><use href="#pm-mail"/></svg><input id="pm-email" name="email" type="email" autocomplete="email" placeholder="yourname@example.com" required maxlength="120"></div><span class="pm-err" aria-live="polite"></span></div>
-              <fieldset class="pm-f full" data-rv data-f="services" style="border:0;padding:0;margin:4px 0 0"><legend class="pm-lg" style="padding:0;margin-bottom:8px">Services You&#8217;re Interested In<sup>*</sup></legend><div class="pm-svc"><label data-svc="ga"><input type="checkbox" name="services" value="Google Ads"><span class="ic" style="--sc:#F05A00"><svg aria-hidden="true"><use href="#i-ad"/></svg></span><span><b>Google Ads</b></span><span class="bx"><svg aria-hidden="true"><use href="#pm-chk"/></svg></span><span class="sug" hidden>Suggested</span></label><label data-svc="meta"><input type="checkbox" name="services" value="Meta Ads"><span class="ic" style="--sc:#2563EB"><svg aria-hidden="true"><use href="#pm-thumb"/></svg></span><span><b>Meta Ads</b></span><span class="bx"><svg aria-hidden="true"><use href="#pm-chk"/></svg></span><span class="sug" hidden>Suggested</span></label><label data-svc="pm"><input type="checkbox" name="services" value="Performance Marketing"><span class="ic" style="--sc:#F05A00"><svg aria-hidden="true"><use href="#i-bars"/></svg></span><span><b>Performance Marketing</b><small>Google Ads + Meta Ads</small></span><span class="bx"><svg aria-hidden="true"><use href="#pm-chk"/></svg></span><span class="sug" hidden>Suggested</span></label><label data-svc="web"><input type="checkbox" name="services" value="Website Build"><span class="ic" style="--sc:#F05A00"><svg aria-hidden="true"><use href="#cs-code"/></svg></span><span><b>Website Build</b></span><span class="bx"><svg aria-hidden="true"><use href="#pm-chk"/></svg></span><span class="sug" hidden>Suggested</span></label><label data-svc="app"><input type="checkbox" name="services" value="Applications Create"><span class="ic" style="--sc:#2563EB"><svg aria-hidden="true"><use href="#i-phone"/></svg></span><span><b>Applications Create</b></span><span class="bx"><svg aria-hidden="true"><use href="#pm-chk"/></svg></span><span class="sug" hidden>Suggested</span></label></div><span class="pm-err" aria-live="polite"></span></fieldset>
+              <fieldset class="pm-f full" data-rv data-f="services" style="border:0;padding:0;margin:4px 0 0"><legend class="pm-lg" style="padding:0;margin-bottom:10px;width:100%">Services You&#8217;re Interested In<sup>*</sup><span class="pm-svc-hint">Select one or more</span><span class="pm-svc-count" id="pm-svc-count" aria-live="polite"></span></legend><div class="pm-svc"><label data-svc="ga" class="w3"><input type="checkbox" name="services" value="Google Ads Campaigns"><span class="ic"><svg aria-hidden="true"><use href="#svc-ga"/></svg></span><span class="tx"><b>Google Ads Campaigns</b><small>Search, Performance Max &amp; AI Max</small></span><span class="bx" aria-hidden="true"><svg><use href="#pm-chk"/></svg></span><span class="sug" hidden>Suggested</span></label><label data-svc="rmk" class="w3"><input type="checkbox" name="services" value="Remarketing"><span class="ic"><svg aria-hidden="true"><use href="#svc-rmk"/></svg></span><span class="tx"><b>Remarketing</b><small>Re-engage past visitors &amp; customers</small></span><span class="bx" aria-hidden="true"><svg><use href="#pm-chk"/></svg></span><span class="sug" hidden>Suggested</span></label><label data-svc="audit" class="w3"><input type="checkbox" name="services" value="Account Audit & Optimization"><span class="ic"><svg aria-hidden="true"><use href="#svc-audit"/></svg></span><span class="tx"><b>Account Audit &amp; Optimization</b><small>Search terms, bids &amp; structure</small></span><span class="bx" aria-hidden="true"><svg><use href="#pm-chk"/></svg></span><span class="sug" hidden>Suggested</span></label><label data-svc="track" class="w3"><input type="checkbox" name="services" value="Conversion Tracking Setup"><span class="ic"><svg aria-hidden="true"><use href="#svc-track"/></svg></span><span class="tx"><b>Conversion Tracking</b><small>GA4 &amp; Google Tag Manager setup</small></span><span class="bx" aria-hidden="true"><svg><use href="#pm-chk"/></svg></span><span class="sug" hidden>Suggested</span></label><label data-svc="rep" class="w3"><input type="checkbox" name="services" value="Analytics & Reporting"><span class="ic"><svg aria-hidden="true"><use href="#svc-rep"/></svg></span><span class="tx"><b>Analytics &amp; Reporting</b><small>GA4 &amp; Clarity insights, CRO ideas</small></span><span class="bx" aria-hidden="true"><svg><use href="#pm-chk"/></svg></span><span class="sug" hidden>Suggested</span></label><label data-svc="lp" class="w3"><input type="checkbox" name="services" value="Landing Pages"><span class="ic"><svg aria-hidden="true"><use href="#svc-lp"/></svg></span><span class="tx"><b>Landing Pages</b><small>Built with HTML, CSS, JS &amp; React</small></span><span class="bx" aria-hidden="true"><svg><use href="#pm-chk"/></svg></span><span class="sug" hidden>Suggested</span></label></div><span class="pm-err" aria-live="polite"></span></fieldset>
               <div class="pm-f full" data-rv data-f="details"><label for="pm-details">Project Details<sup>*</sup></label><div class="pm-ta"><svg aria-hidden="true"><use href="#pm-msg"/></svg><textarea id="pm-details" name="details" maxlength="500" required placeholder="Tell me about your project, goals, target audience, budget if decided, or any specific requirements&#8230;"></textarea><span class="pm-count" id="pm-count">0/500</span></div><span class="pm-err" aria-live="polite"></span></div>
             </div>
             <div class="pm-hp" aria-hidden="true"><label for="pm-hp">Leave this field empty</label><input id="pm-hp" name="hp_field" tabindex="-1" autocomplete="off"></div>
@@ -1018,19 +1124,130 @@
     </div>
   </section>
 
-  <section class="block alt" id="education">
+  <section class="block alt ed" id="education" aria-labelledby="ed-title">
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+      <defs>
+        <radialGradient id="edg-glow" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#FFB27A" stop-opacity=".38"/><stop offset="1" stop-color="#FFB27A" stop-opacity="0"/></radialGradient>
+        <linearGradient id="edg-podtop" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFFFFF"/><stop offset="1" stop-color="#FFE8D6"/></linearGradient>
+        <linearGradient id="edg-podside" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#FFD9BC"/><stop offset=".5" stop-color="#FFBE8E"/><stop offset="1" stop-color="#FFD9BC"/></linearGradient>
+        <linearGradient id="edg-cover" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFA15C"/><stop offset="1" stop-color="#F05A00"/></linearGradient>
+        <linearGradient id="edg-cover2" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#E65100"/><stop offset="1" stop-color="#C2410C"/></linearGradient>
+        <linearGradient id="edg-cap" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#465063"/><stop offset="1" stop-color="#1B212D"/></linearGradient>
+        <linearGradient id="edg-skull" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2A3242"/><stop offset="1" stop-color="#151A24"/></linearGradient>
+        <radialGradient id="edg-ball" cx="35%" cy="30%" r="70%"><stop offset="0" stop-color="#FFC08A"/><stop offset="1" stop-color="#F05A00"/></radialGradient>
+        <linearGradient id="edg-cloud" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8CBEFF"/><stop offset="1" stop-color="#2F7BF6"/></linearGradient>
+        <linearGradient id="edg-bar" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FF8A3D"/><stop offset="1" stop-color="#FFC9A0"/></linearGradient>
+        <linearGradient id="edg-wire" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#FFB27A"/><stop offset=".5" stop-color="#F05A00"/><stop offset="1" stop-color="#FFB27A"/></linearGradient>
+        <linearGradient id="edg-target" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FF7A2E"/><stop offset="1" stop-color="#E03A12"/></linearGradient>
+      </defs>
+    </svg>
     <div class="wrap">
-      <div class="head reveal">
-        <span class="kicker">Education</span>
-        <h2>Academic background</h2>
-      </div>
-      <div class="edu reveal">
-        <div class="logo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m2 9 10-5 10 5-10 5z"/><path d="M6 11v5c3 2 9 2 12 0v-5"/><path d="M22 9v6"/></svg></div>
-        <div>
-          <h3>B.Tech, Computer Science</h3>
-          <p>Ganpat University, India · Specialization in Cloud-Based Applications</p>
+      <div class="ed-top">
+        <div class="ed-main">
+          <div class="ed-head">
+            <span class="cs-kicker ed-eb"><i></i>Education<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></span>
+            <h2 class="ed-h" id="ed-title"><span>Education &amp;</span> <span class="cs-grad">Foundation</span></h2>
+            <p class="ed-sub">The technical foundation behind my marketing approach.</p>
+          </div>
+
+          <article class="ed-card">
+            <div class="ed-rail" aria-hidden="true"><span class="ed-num">01</span><span class="ed-line"><i></i></span><span class="ed-dot"></span></div>
+            <div class="ed-ic" aria-hidden="true">
+              <svg viewBox="0 0 48 48"><path d="M12 22v10c0 3.3 5.4 6.5 12 6.5S36 35.3 36 32V22l-12 5.5z" fill="#FFC9A0"/><path d="M3 18 24 8.5 45 18 24 27.5z" fill="url(#edg-cover)"/><path d="M24 18 41 20v10" fill="none" stroke="#C2410C" stroke-width="2" stroke-linecap="round"/><circle cx="41" cy="32" r="2.6" fill="#C2410C"/></svg>
+            </div>
+            <div class="ed-body">
+              <h3>B.Tech, Computer Science</h3>
+              <p class="ed-uni">Ganpat University, India</p>
+              <span class="ed-spec"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 18a4.5 4.5 0 0 1-.6-8.96A6 6 0 0 1 18 8.5a4.75 4.75 0 0 1-.5 9.5z"/></svg>Specialization in Cloud-Based Applications</span>
+            </div>
+            <div class="ed-meta">
+              <span class="k">Duration</span>
+              <span class="yr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M8 3v4M16 3v4M3.5 10h17M8 14h.01M12 14h.01M16 14h.01M8 17h.01M12 17h.01"/></svg>2022 <em>—</em> 2026</span>
+            </div>
+          </article>
         </div>
-        <span class="yr">2022 – 2026</span>
+
+        <div class="ed-art" aria-hidden="true">
+          <svg viewBox="0 0 480 440">
+            <circle cx="270" cy="240" r="210" fill="url(#edg-glow)"/>
+            <path class="ed-arc" d="M236 92 C 300 50, 352 118, 452 46" fill="none" stroke="#F05A00" stroke-opacity=".32" stroke-width="2" stroke-linecap="round"/>
+
+            <g class="fl f2"><g transform="rotate(-8 145 150)">
+              <rect x="58" y="44" width="176" height="212" rx="24" fill="#fff" fill-opacity=".94" stroke="#F1E4DA"/>
+              <rect x="84" y="84" width="92" height="10" rx="5" fill="#EEE7E1"/>
+              <rect x="84" y="108" width="116" height="10" rx="5" fill="#F3EDE8"/>
+              <rect x="84" y="132" width="78" height="10" rx="5" fill="#EEE7E1"/>
+              <rect x="84" y="156" width="104" height="10" rx="5" fill="#F3EDE8"/>
+              <path d="M112 196 98 210l14 14M148 196l14 14-14 14M136 190l-12 40" fill="none" stroke="#F05A00" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+              <rect x="176" y="58" width="50" height="40" rx="12" fill="#EAF2FF"/>
+              <path d="M190 88a7.5 7.5 0 0 1-.8-14.9A10 10 0 0 1 208.5 72a8 8 0 0 1 .5 16z" fill="url(#edg-cloud)"/>
+            </g></g>
+
+            <g class="fl f3"><g transform="rotate(7 412 150)">
+              <rect x="358" y="72" width="112" height="146" rx="22" fill="#fff" fill-opacity=".94" stroke="#F1E4DA"/>
+              <rect x="376" y="162" width="18" height="38" rx="5" fill="url(#edg-bar)"/>
+              <rect x="401" y="140" width="18" height="60" rx="5" fill="url(#edg-bar)"/>
+              <rect x="426" y="116" width="18" height="84" rx="5" fill="url(#edg-bar)"/>
+              <path d="M374 144 400 118l16 10 32-34" fill="none" stroke="#F05A00" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M436 92h14v14" fill="none" stroke="#F05A00" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </g></g>
+
+            <ellipse cx="270" cy="360" rx="186" ry="50" fill="none" stroke="#F05A00" stroke-opacity=".28" stroke-width="2"/>
+            <path d="M120 350v24a150 36 0 0 0 300 0v-24z" fill="url(#edg-podside)"/>
+            <ellipse cx="270" cy="350" rx="150" ry="36" fill="url(#edg-podtop)"/>
+            <ellipse cx="270" cy="350" rx="150" ry="36" fill="none" stroke="#fff" stroke-width="2"/>
+
+            <path d="M160 316 270 346v24L160 340z" fill="#FFF8F1"/>
+            <path d="M166 324l104 30M166 331l104 30" stroke="#F4DCC8" stroke-width="1.5"/>
+            <path d="M270 346 380 316v24L270 370z" fill="url(#edg-cover2)"/>
+            <path d="M160 316 270 286 380 316 270 346z" fill="url(#edg-cover)"/>
+
+            <path d="M178 292 272 318v22L178 314z" fill="#FFFDFB"/>
+            <path d="M184 300l88 25M184 307l88 25" stroke="#EFE3D8" stroke-width="1.5"/>
+            <path d="M272 318 362 290v22L272 340z" fill="#E9E2DC"/>
+            <path d="M178 292 268 266 362 290 272 318z" fill="#FFFFFF" stroke="#F1E4DA"/>
+
+            <g class="fl f1"><g transform="translate(0 -12)">
+              <path d="M214 262v28q54 30 108 0v-28q-54 26-108 0z" fill="url(#edg-skull)"/>
+              <path d="M170 248 268 220 366 248v6l-98 28-98-28z" fill="#0F141C"/>
+              <path d="M170 248 268 220 366 248 268 276z" fill="url(#edg-cap)"/>
+              <ellipse cx="268" cy="248" rx="7" ry="4" fill="#F05A00"/>
+              <path d="M268 248q52-2 76 12l2 38" fill="none" stroke="#F59E0B" stroke-width="3" stroke-linecap="round"/>
+              <path d="M339 296h14l4 28h-22z" fill="url(#edg-cover)"/></g>
+            </g>
+
+            <circle class="fl f3" cx="452" cy="46" r="8" fill="url(#edg-ball)"/>
+            <circle class="fl f2" cx="300" cy="72" r="10" fill="url(#edg-ball)"/>
+            <circle class="fl f1" cx="96" cy="318" r="9" fill="url(#edg-ball)"/>
+            <circle class="fl f3" cx="436" cy="382" r="11" fill="url(#edg-ball)"/>
+          </svg>
+        </div>
+      </div>
+
+      <div class="ed-flow">
+        <svg class="ed-wire" aria-hidden="true" preserveAspectRatio="none"><path d=""/><circle r="7"/><circle r="7"/><circle r="7"/></svg>
+        <ol class="ed-steps" aria-label="From technical foundation to marketing">
+          <li class="ed-step" style="--ec:#F05A00">
+            <span class="si" aria-hidden="true"><svg viewBox="0 0 64 64"><rect x="10" y="12" width="44" height="31" rx="5" fill="url(#edg-cover)"/><rect x="14.5" y="16.5" width="35" height="22" rx="2.5" fill="#FFEBDC"/><path d="M27.5 22.5 22.5 27.5l5 5M36.5 22.5l5 5-5 5M34 20.5l-4 14" fill="none" stroke="#F05A00" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 45h56l-4 7H8z" fill="#F7A066"/><path d="M26 45h12l-1.5 2.5h-9z" fill="#E65100"/></svg></span>
+            <h4>Computer Science</h4>
+            <p>Strong logical and analytical foundation</p>
+          </li>
+          <li class="ed-step" style="--ec:#2F7BF6">
+            <span class="si" aria-hidden="true"><svg viewBox="0 0 64 64"><path d="M18 44a12 12 0 0 1 .5-24A16 16 0 0 1 49 22a11 11 0 0 1 0 22z" fill="url(#edg-cloud)"/><rect x="21" y="30" width="22" height="9" rx="2.5" fill="#1E293B"/><rect x="21" y="41" width="22" height="9" rx="2.5" fill="#273449"/><circle cx="26" cy="34.5" r="1.4" fill="#7DD3FC"/><circle cx="26" cy="45.5" r="1.4" fill="#7DD3FC"/><path d="M31 34.5h8M31 45.5h8" stroke="#475569" stroke-width="1.6" stroke-linecap="round"/></svg></span>
+            <h4>Cloud Applications</h4>
+            <p>Foundation in cloud-based technologies</p>
+          </li>
+          <li class="ed-step" style="--ec:#F05A00">
+            <span class="si" aria-hidden="true"><svg viewBox="0 0 64 64"><rect x="10" y="34" width="12" height="20" rx="3.5" fill="url(#edg-bar)"/><rect x="26" y="22" width="12" height="32" rx="3.5" fill="url(#edg-bar)"/><rect x="42" y="10" width="12" height="44" rx="3.5" fill="url(#edg-cover)"/></svg></span>
+            <h4>Data Understanding</h4>
+            <p>Tracking, analytics and decision making</p>
+          </li>
+          <li class="ed-step" style="--ec:#E03A12">
+            <span class="si" aria-hidden="true"><svg viewBox="0 0 64 64"><circle cx="30" cy="34" r="23" fill="url(#edg-target)"/><circle cx="30" cy="34" r="16" fill="#fff"/><circle cx="30" cy="34" r="10" fill="url(#edg-target)"/><circle cx="30" cy="34" r="4" fill="#fff"/><path d="M30 34 52 12" stroke="#1F2937" stroke-width="3" stroke-linecap="round"/><path d="M50 7l2 5 5 2-5 4-4-2-2-4z" fill="#F05A00"/></svg></span>
+            <h4>Performance Marketing</h4>
+            <p>Applying technical knowledge to marketing</p>
+          </li>
+        </ol>
       </div>
     </div>
   </section>
@@ -1399,6 +1616,75 @@
   document.getElementById('slots').innerHTML = sv;
   if (reduce) { var so = document.getElementById('solar'); if (so.pauseAnimations) so.pauseAnimations(); }
 
+  /* Education & Foundation: connector line + entrance */
+  (function () {
+    var sec = document.getElementById('education');
+    if (!sec || !sec.querySelector('.ed-flow')) return;
+    var flow = sec.querySelector('.ed-flow'), wire = sec.querySelector('.ed-wire'), path = wire.querySelector('path'),
+        balls = wire.querySelectorAll('circle'), steps = sec.querySelectorAll('.ed-step'), len = 0, drawn = false;
+    function layout() {
+      var fr = flow.getBoundingClientRect();
+      if (!fr.width || getComputedStyle(wire).display === 'none') return;
+      wire.setAttribute('viewBox', '0 0 ' + fr.width.toFixed(1) + ' ' + fr.height.toFixed(1));
+      var pts = Array.prototype.map.call(steps, function (s) {
+        var r = s.querySelector('.si').getBoundingClientRect();
+        return [r.left + r.width / 2 - fr.left, r.top + r.height / 2 - fr.top];
+      });
+      var d = 'M' + pts[0][0].toFixed(1) + ' ' + pts[0][1].toFixed(1);
+      for (var i = 1; i < pts.length; i++) {
+        var a = pts[i - 1], b = pts[i], dx = b[0] - a[0];
+        d += ' C' + (a[0] + dx / 3).toFixed(1) + ' ' + (a[1] - 22).toFixed(1) + ' ' + (a[0] + 2 * dx / 3).toFixed(1) + ' ' + (b[1] + 22).toFixed(1) + ' ' + b[0].toFixed(1) + ' ' + b[1].toFixed(1);
+        if (balls[i - 1]) { balls[i - 1].setAttribute('cx', ((a[0] + b[0]) / 2).toFixed(1)); balls[i - 1].setAttribute('cy', ((a[1] + b[1]) / 2).toFixed(1)); }
+      }
+      path.setAttribute('d', d);
+      len = path.getTotalLength();
+      path.style.strokeDasharray = len;
+      if (drawn || !sec.classList.contains('gs')) path.style.strokeDashoffset = 0;
+    }
+    layout();
+    window.addEventListener('resize', layout);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(layout);
+
+    if (!window.gsap || !window.ScrollTrigger || reduce) return;
+    gsap.registerPlugin(ScrollTrigger);
+    sec.classList.add('gs');
+    var q = function (s) { return sec.querySelectorAll(s); };
+    var bodyBits = q('.ed-body > *, .ed-meta > *');
+    gsap.set(q('.ed-eb, .ed-h > span, .ed-sub'), { autoAlpha: 0, y: 22 });
+    gsap.set(q('.ed-card'), { autoAlpha: 0, y: 40 });
+    gsap.set(q('.ed-line i'), { scaleY: 0 });
+    gsap.set(q('.ed-num, .ed-dot'), { scale: 0 });
+    gsap.set(q('.ed-ic'), { autoAlpha: 0, scale: .6 });
+    gsap.set(bodyBits, { autoAlpha: 0, y: 12 });
+    gsap.set(q('.ed-art'), { autoAlpha: 0, y: 30, scale: .96 });
+    gsap.set(steps, { autoAlpha: 0, y: 30 });
+    gsap.set(balls, { scale: 0, transformOrigin: 'center', transformBox: 'fill-box' });
+    path.style.strokeDashoffset = len;
+
+    var tl = gsap.timeline({ defaults: { ease: 'power3.out' }, scrollTrigger: { trigger: sec, start: 'top 72%', once: true } });
+    tl.to(q('.ed-eb'), { autoAlpha: 1, y: 0, duration: .5 })
+      .to(q('.ed-h > span'), { autoAlpha: 1, y: 0, duration: .7, stagger: .1 }, '-=.25')
+      .to(q('.ed-sub'), { autoAlpha: 1, y: 0, duration: .5 }, '-=.45')
+      .to(q('.ed-art'), { autoAlpha: 1, y: 0, scale: 1, duration: 1 }, '-=.5')
+      .to(q('.ed-card'), { autoAlpha: 1, y: 0, duration: .7, clearProps: 'transform' }, '-=.85')
+      .to(q('.ed-line i'), { scaleY: 1, duration: .7, ease: 'power2.inOut' }, '-=.35')
+      .to(q('.ed-dot'), { scale: 1, duration: .3, ease: 'back.out(2)' }, '-=.15')
+      .to(q('.ed-num'), { scale: 1, duration: .45, ease: 'back.out(2)' }, '-=.2')
+      .to(q('.ed-ic'), { autoAlpha: 1, scale: 1, duration: .6, ease: 'back.out(1.6)' }, '-=.8')
+      .to(bodyBits, { autoAlpha: 1, y: 0, duration: .45, stagger: .07 }, '-=.45')
+      .to(steps, { autoAlpha: 1, y: 0, duration: .55, stagger: .14, clearProps: 'transform' }, '-=.1');
+    tl.add(function () { drawn = true; }, '<');
+    for (var i = 0; i < balls.length; i++) {
+      tl.to(path, { strokeDashoffset: len * (1 - (i + .5) / balls.length) , duration: .35, ease: 'none' }, i === 0 ? '<.2' : '>')
+        .to(balls[i], { scale: 1, duration: .3, ease: 'back.out(2.5)' }, '>-.05');
+    }
+    tl.to(path, { strokeDashoffset: 0, duration: .3, ease: 'none' }, '>');
+
+    [['.ed-art .f1', 7, 3.2], ['.ed-art .f2', 9, 4], ['.ed-art .f3', 6, 3.6]].forEach(function (f, n) {
+      gsap.to(q(f[0]), { y: -f[1], duration: f[2], ease: 'sine.inOut', yoyo: true, repeat: -1, delay: n * .6 });
+    });
+  })();
+
   /* Reveal on scroll (only below the fold) */
   if ('IntersectionObserver' in window && !reduce) {
     var io = new IntersectionObserver(function (entries) {
@@ -1444,12 +1730,22 @@
   });
   /* Core skills: project inquiry modal */
   (function projectModal() {
-    // ---- Submission: Web3Forms (web3forms.com) -----------------------------------------
-    // The access key only lets this form deliver messages to the inbox it was created for;
-    // Web3Forms designs it to be public in website code. Enquiries go to patelmarvin052004@gmail.com.
+    // ---- Submission ----------------------------------------------------------------------
+    // PRIMARY: EmailJS (emailjs.com) sends two emails per enquiry:
+    //   1) the enquiry to your inbox (owner template), 2) the automatic reply to the visitor (auto-reply template).
+    // Paste your EmailJS Public Key, Service ID and owner Template ID below. These three values are PUBLIC by
+    // design (EmailJS expects them in website code). NEVER put the EmailJS Private Key or any password here.
+    var EMAILJS = {
+      publicKey: '',                 // Account > General > Public Key
+      serviceId: '',                 // Email Services > your Gmail service > Service ID
+      ownerTemplate: '',             // template that emails YOU the enquiry
+      replyTemplate: 'template_qwg7qjc' // template that emails the VISITOR ("Thanks for contacting Marvin Patel")
+    };
+    // FALLBACK: Web3Forms (used only until the EmailJS values above are filled in). No auto-reply on its free plan.
     var OWNER_EMAIL = 'patelmarvin052004@gmail.com';
     var INQUIRY_ENDPOINT = 'https://api.web3forms.com/submit';
-    var WEB3FORMS_KEY = '3b6021aa-6d63-4216-93dd-d52dc774e940';
+    var WEB3FORMS_KEY = '822c4180-4177-466a-85ed-7f1cd62f8939';
+    var USE_EMAILJS = !!(EMAILJS.publicKey && EMAILJS.serviceId && EMAILJS.ownerTemplate);
     var RATE = { max: 3, windowMs: 10 * 60 * 1000, key: 'mp-inquiry-times' };   // gentle per-browser limit
     var MIN_FILL_MS = 3000;
 
@@ -1462,10 +1758,10 @@
     var steps = pm.querySelectorAll('.pm-steps li');
     var motion = !reduce && window.gsap;
     var CTX = {
-      ads: { title: 'Create a <em>Google Ads</em> Project', chip: 'Google Ads', pre: ['ga'] },
-      strategy: { title: 'Plan Your <em>Marketing Strategy</em>', chip: 'Campaign Strategy', pre: ['pm'] },
-      analytics: { title: 'Analyze Your <em>Campaign</em>', chip: 'Analytics &amp; Optimization', pre: ['pm'] },
-      web: { title: 'Build Your <em>Website or Application</em>', chip: 'Web &amp; Technical', pre: [], sug: ['web', 'app'] }
+      ads: { title: 'Create a <em>Google Ads</em> Project', chip: 'Google Ads', pre: ['ga'], sug: ['rmk'] },
+      strategy: { title: 'Plan Your <em>Campaign Strategy</em>', chip: 'Campaign Strategy', pre: ['ga'], sug: ['audit', 'rmk'] },
+      analytics: { title: 'Analyze Your <em>Campaign</em>', chip: 'Analytics &amp; Optimization', pre: ['rep'], sug: ['track', 'audit'] },
+      web: { title: 'Build Your <em>Landing Page</em>', chip: 'Web &amp; Technical', pre: ['lp'], sug: ['track'] }
     };
     var current = null, trigger = null, tl = null, card = null, openedAt = 0, busy = false, submissionId = null, lastKey = '';
 
@@ -1512,7 +1808,10 @@
       if (!busy && send.dataset.state === 'retry') { hideAlert(); setBtn('idle'); }
       progress();
     });
-    form.addEventListener('change', progress);
+    var svcCount = document.getElementById('pm-svc-count');
+    function updateSvcCount() { var n = form.querySelectorAll('input[name="services"]:checked').length; svcCount.textContent = n ? n + ' selected' : ''; }
+    form.addEventListener('change', function () { progress(); updateSvcCount(); });
+    window.updateSvcCountRef = updateSvcCount;
     form.addEventListener('focusout', function (ev) {
       var f = ev.target.closest('[data-f]'); if (!f || f.dataset.f === 'services') return;
       var el = f.querySelector('input, textarea'); if (!el || !el.value.trim()) return;
@@ -1531,7 +1830,7 @@
         l.querySelector('input').checked = (c.pre || []).indexOf(k) > -1;
         l.querySelector('.sug').hidden = (c.sug || []).indexOf(k) < 0;
       });
-      send.disabled = false; busy = false; submissionId = null; lastKey = ''; hideAlert(); setBtn('idle', true);
+      send.disabled = false; busy = false; submissionId = null; lastKey = ''; hideAlert(); setBtn('idle', true); if (window.updateSvcCountRef) window.updateSvcCountRef();
       if (motion) gsap.set([form, done], { clearProps: 'all' });
       progress();
     }
@@ -1561,7 +1860,7 @@
           .fromTo(box, { opacity: 0, scale: .94, y: 34 }, { opacity: 1, scale: 1, y: 0, duration: .6 }, '<.05')
           .from(pm.querySelectorAll('.pm-script, .pm-t'), { opacity: 0, y: 22, duration: .5, stagger: .06 }, '-=.32')
           .from(form.querySelectorAll('[data-rv]'), { opacity: 0, y: 14, duration: .42, stagger: .045 }, '<.08')
-          .from(form.querySelectorAll('.pm-svc label'), { opacity: 0, y: 12, duration: .38, stagger: .05 }, '-=.45')
+          .fromTo(form.querySelectorAll('.pm-svc label'), { opacity: 0, y: 12, transition: 'none' }, { opacity: 1, y: 0, duration: .38, stagger: .05, clearProps: 'transform,transition' }, '-=.45')
           .to(send, { boxShadow: '0 0 0 7px rgba(249,115,22,.18), 0 16px 30px -14px rgba(240,90,0,.95)', duration: .35, yoyo: true, repeat: 1, ease: 'sine.inOut' }, '-=.15');
       } else { veil.style.opacity = 1; box.style.opacity = 1; }
       setTimeout(function () { form.name.focus({ preventScroll: true }); }, motion ? 450 : 0);
@@ -1570,7 +1869,7 @@
       pm.classList.remove('open'); pm.setAttribute('aria-hidden', 'true');
       document.documentElement.style.overflow = '';
       if (card) card.classList.remove('cs-active');
-      if (motion) gsap.set([veil, box, send, form, done].concat(Array.prototype.slice.call(pm.querySelectorAll('.pm-script, .pm-t, [data-rv], .pm-svc label'))), { clearProps: 'all' });
+      if (motion) gsap.set([veil, box, send, form, done].concat(Array.prototype.slice.call(pm.querySelectorAll('.pm-script, .pm-t, [data-rv], .pm-svc label'))), { clearProps: 'opacity,transform,scale,translate,rotate,boxShadow,visibility,transition' });
       else { veil.style.opacity = ''; box.style.opacity = ''; }
       if (trigger) trigger.focus({ preventScroll: true });
     }
@@ -1630,7 +1929,7 @@
         '<div class="pm-mark">' + dots + '<svg viewBox="0 0 120 120" aria-hidden="true"><circle class="ring" cx="60" cy="60" r="50"/><path class="tick" d="M38 61.5 53 76 83 45"/></svg></div>' +
         '<h3 tabindex="-1">Thank You, ' + esc(name) + '!</h3>' +
         '<p class="lead">Your enquiry has been received.</p>' +
-        '<p>I&#8217;ll review your requirements and get back to you soon.</p>' +
+        '<p>' + (USE_EMAILJS ? 'A confirmation email is on its way to your inbox. ' : '') + 'I&#8217;ll review your requirements and get back to you soon.</p>' +
         '<button class="pm-send pm-back" type="button" data-act="close"><span>Back to Portfolio</span><svg class="ar" aria-hidden="true"><use href="#cs-arrow"/></svg></button></div>';
     }
     function partialHtml(name, email) {
@@ -1703,42 +2002,55 @@
 
       var first = v.name.split(' ')[0];
       var when = new Date().toLocaleString('en-IN', { dateStyle: 'medium', timeStyle: 'short' });
-      fetch(INQUIRY_ENDPOINT, {
-        method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }, signal: ctl.signal,
-        body: JSON.stringify({
-          access_key: WEB3FORMS_KEY,
-          subject: 'New Portfolio Enquiry — ' + v.name,
-          from_name: 'Marvin Patel Portfolio',
-          replyto: v.email,
-          botcheck: false,
-          'Name': v.name,
-          'email': v.email,
-          'Phone': v.phone,
-          'Services Interested In': v.services.join(', '),
-          'Project Details': v.details,
-          'Submission Date': when,
-          'Source': 'Marvin Patel Portfolio'
-        })
-      })
-        .then(function (r) { return r.json().catch(function () { return {}; }).then(function (d) { return { status: r.status, d: d || {} }; }); })
-        .then(function (res) {
-          clearTimeout(timer);
-          var d = res.d;
-          if (res.status >= 200 && res.status < 300 && d.success === true) {
-            try { times.push(Date.now()); localStorage.setItem(RATE.key, JSON.stringify(times)); } catch (err) {}
-            setBtn('sent'); setTimeout(function () { playSuccess(successHtml(first)); }, motion ? 420 : 0);
-            return;
-          }
-          busy = false; send.disabled = false;
-          if (res.status === 429) { setBtn('retry'); showAlert('busy', 'Too many enquiries were sent in a short time. Please try again in a few minutes.'); return; }
-          setBtn('retry'); showAlert('failed');
-        })
-        .catch(function () {
-          clearTimeout(timer);
-          busy = false; send.disabled = false;
-          if (navigator.onLine === false) { setBtn('retry'); showAlert('failed', 'You appear to be offline. Please check your connection and try again.'); }
-          else { setBtn('idle'); showAlert('offline'); }   // e.g. the claude.ai preview, which blocks outside connections
-        });
+
+      function viaEmailJS(template) {
+        return fetch('https://api.emailjs.com/api/v1.0/email/send', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' }, signal: ctl.signal,
+          body: JSON.stringify({ service_id: EMAILJS.serviceId, template_id: template, user_id: EMAILJS.publicKey, template_params: {
+            from_name: v.name, from_email: v.email, reply_to: v.email, phone: v.phone,
+            services: v.services.join(', '), details: v.details, submitted_at: when,
+            source: 'Marvin Patel Portfolio', submission_id: submissionId } })
+        }).then(function (r) { return { ok: r.ok, status: r.status }; });
+      }
+      function viaWeb3Forms() {
+        return fetch(INQUIRY_ENDPOINT, {
+          method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }, signal: ctl.signal,
+          body: JSON.stringify({
+            access_key: WEB3FORMS_KEY, subject: 'New Portfolio Enquiry — ' + v.name, from_name: 'Marvin Patel Portfolio',
+            replyto: v.email, botcheck: false, 'Name': v.name, 'email': v.email, 'Phone': v.phone,
+            'Services Interested In': v.services.join(', '), 'Project Details': v.details,
+            'Submission Date': when, 'Source': 'Marvin Patel Portfolio'
+          })
+        }).then(function (r) { return r.json().catch(function () { return {}; }).then(function (d) { return { ok: r.status >= 200 && r.status < 300 && (d || {}).success === true, status: r.status }; }); });
+      }
+      function delivered(html) {
+        clearTimeout(timer);
+        try { times.push(Date.now()); localStorage.setItem(RATE.key, JSON.stringify(times)); } catch (err) {}
+        setBtn('sent'); setTimeout(function () { playSuccess(html); }, motion ? 420 : 0);
+      }
+      function failed(status) {
+        clearTimeout(timer); busy = false; send.disabled = false; setBtn('retry');
+        if (status === 429) { showAlert('busy', 'Too many enquiries were sent in a short time. Please try again in a few minutes.'); return; }
+        showAlert('failed');
+      }
+      function unreachable() {
+        clearTimeout(timer); busy = false; send.disabled = false;
+        if (navigator.onLine === false) { setBtn('retry'); showAlert('failed', 'You appear to be offline. Please check your connection and try again.'); }
+        else { setBtn('idle'); showAlert('offline'); }   // e.g. the claude.ai preview, which blocks outside connections
+      }
+
+      if (USE_EMAILJS) {
+        // 1) enquiry to Marvin. Only a real 200 counts as sent.
+        viaEmailJS(EMAILJS.ownerTemplate).then(function (res) {
+          if (!res.ok) { failed(res.status); return; }
+          // 2) automatic reply to the visitor. If only this fails, the enquiry still arrived: say so honestly.
+          return viaEmailJS(EMAILJS.replyTemplate)
+            .then(function (r2) { delivered(r2.ok ? successHtml(first) : partialHtml(first, v.email)); },
+                  function () { delivered(partialHtml(first, v.email)); });
+        }, unreachable);
+      } else {
+        viaWeb3Forms().then(function (res) { if (res.ok) delivered(successHtml(first)); else failed(res.status); }, unreachable);
+      }
     });
   })();
 })();
